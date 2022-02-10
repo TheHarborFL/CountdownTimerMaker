@@ -3,6 +3,11 @@
 const CANVAS_SIZE_X = 1920;
 const CANVAS_SIZE_Y = 1080;
 
+const TIME_FORMAT_MCSS = 1;
+const TIME_FORMAT_CSS = 2;
+const TIME_FORMAT_SS = 3;
+const TIME_FORMAT_S = 4;
+
 // Set up the background canvas
 let bgCanvas = document.getElementById('background-canvas');
 let bgCtx = bgCanvas.getContext('2d');
@@ -21,9 +26,15 @@ let g_TextVerticalPosition;
 
 drawCanvas(stringifySeconds(document.getElementById('duration').value), true);
 
-let inputElements = document.getElementsByTagName('input');
+let inputElements = document.querySelectorAll('input, select');
 for (let i = 0; i < inputElements.length; i++) {
-	inputElements[i].addEventListener('change', () => drawCanvas(stringifySeconds(document.getElementById('duration').value), true));
+	inputElements[i].addEventListener('change', function() {
+		let previewValue = document.getElementById('duration').value;
+		if (this.id == 'sub-1m-format') {
+			previewValue = 9;
+		}
+		drawCanvas(stringifySeconds(previewValue), true)
+	});
 }
 
 document.getElementById('make-images').addEventListener('click', async () => {
@@ -54,14 +65,31 @@ document.getElementById('make-images').addEventListener('click', async () => {
 function setControlsDisabled(disabled) {
 	document.body.className = disabled ? 'working' : '';
 
-	let controls = document.querySelectorAll('input, button');
+	let controls = document.querySelectorAll('input, select, button');
 	for (let i = 0; i < controls.length; i++) {
 		controls[i].disabled = disabled;
 	}
 }
 
 function stringifySeconds(seconds) {
-	return Math.floor(seconds / 60) + ':' + (seconds % 60).toString().padStart(2, '0');
+	let formatted = Math.floor(seconds / 60) + ':' + (seconds % 60).toString().padStart(2, '0');
+	if (seconds < 60) {
+		switch (parseInt(document.getElementById('sub-1m-format').value, 10)) {
+			case TIME_FORMAT_CSS:
+				formatted = ':' + seconds.toString().padStart(2, '0');
+				break;
+
+			case TIME_FORMAT_SS:
+				formatted = seconds.toString().padStart(2, '0');
+				break;
+
+			case TIME_FORMAT_S:
+				formatted = seconds;
+				break;
+		}
+	}
+
+	return formatted;
 }
 
 function drawCanvas(text, recalculatePosition = false) {
