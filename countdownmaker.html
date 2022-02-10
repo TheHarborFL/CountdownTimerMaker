@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Countdown Image Maker</title>
+		<link rel="stylesheet" href="css/style.css" />
+		<script src="js/zip-full.min.js"></script>
+		<script src="js/countdownmaker.js" defer></script>
+	</head>
+	<body>
+		<div id="controls">
+			<div>
+				<label for="duration">Seconds:</label>
+				<input type="number" id="duration" value="300" min="1" />
+			</div>
+			<div>
+				<label for="font-size">Font Size:</label>
+				<input type="number" id="font-size" value="500" />
+			</div>
+			<div>
+				<label for="font">Font Name:</label>
+				<input type="text" id="font" value="sans-serif" />
+				<label class="checkbox">
+					<input type="checkbox" id="font-bold" /> Bold
+				</label>
+				<label class="checkbox">
+					<input type="checkbox" id="font-italic" /> Italic
+				</label>
+			</div>
+			<div>
+				<label for="line-width">Stroke Width:</label>
+				<input type="number" id="line-width" value="2" min="1" />
+				<label class="checkbox">
+					<input type="checkbox" id="disable-stroke" /> Disable stroke
+				</label>
+			</div>
+			<div>
+				<label for="text-color">Text Color:</label>
+				<input type="color" id="text-color" value="#ffffff" />
+			</div>
+			<div>
+				<label for="stroke-color">Stroke Color:</label>
+				<input type="color" id="stroke-color" value="#000000" />
+			</div>
+			<div>
+				<button type="button" id="make-images">Make Images</button>
+				<progress id="progress-bar" max="300" value="0"></progress>
+			</div>
+		</div>
+		<div id="preview">
+			Preview:
+			<div id="canvas-container">
+				<canvas id="background-canvas" width="1920" height="1080"></canvas>
+				<canvas id="canvas" width="1920" height="1080"></canvas>
+			</div>
+		</div>
+		<script>
+
+		</script>
+	</body>
+</html>
